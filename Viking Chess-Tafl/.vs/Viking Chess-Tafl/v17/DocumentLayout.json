@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\github_rep\\Viking-Chess-Tafl\\Viking Chess-Tafl\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{94A2C7A1-18B4-4C76-AF14-CC27E029C6F1}|Viking Chess-Tafl\\Viking Chess-Tafl.vcxproj|D:\\github_rep\\Viking-Chess-Tafl\\Viking Chess-Tafl\\Viking Chess-Tafl\\Viking Chess-Tafl.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{94A2C7A1-18B4-4C76-AF14-CC27E029C6F1}|Viking Chess-Tafl\\Viking Chess-Tafl.vcxproj|solutionrelative:Viking Chess-Tafl\\Viking Chess-Tafl.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Viking Chess-Tafl.cpp",
+              "DocumentMoniker": "D:\\github_rep\\Viking-Chess-Tafl\\Viking Chess-Tafl\\Viking Chess-Tafl\\Viking Chess-Tafl.cpp",
+              "RelativeDocumentMoniker": "Viking Chess-Tafl\\Viking Chess-Tafl.cpp",
+              "ToolTip": "D:\\github_rep\\Viking-Chess-Tafl\\Viking Chess-Tafl\\Viking Chess-Tafl\\Viking Chess-Tafl.cpp",
+              "RelativeToolTip": "Viking Chess-Tafl\\Viking Chess-Tafl.cpp",
+              "ViewState": "AgIAAFUAAAAAAAAAAAAAACEBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-01-14T23:47:11.478Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

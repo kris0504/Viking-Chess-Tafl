@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{482f10d5-6922-44e9-b4a9-a50cf747b76d}</ProjectGuid>
+    <ProjectGuid>{94a2c7a1-18b4-4c76-af14-cc27e029c6f1}</ProjectGuid>
     <RootNamespace>VikingChessTafl</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
