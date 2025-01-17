@@ -6,6 +6,7 @@ const char ATTACKER = 'A';
 const char DEFENDER = 'D';
 const char EMPTY = '-';
 const char CORNER = 'X';
+const char THRONE = 'T';
 
 char toUpperCase(char c) {
 	if (c >= 'a' && c <= 'z') {
@@ -25,6 +26,10 @@ bool compareStrings(const char* str1, const char* str2) {
 }
 
 bool isValidMove(const char* const* board, int size, int startX, int startY, int endX, int endY, bool isAttackersTurn) {
+	int center = size / 2;
+	if (endX == center && endY == center && board[startX][startY] != KING) {
+		return false;
+	}
 	if ((isAttackersTurn && board[startX][startY] != ATTACKER) ||
 		(!isAttackersTurn && board[startX][startY] != DEFENDER && board[startX][startY] != KING)) {
 		return false;
@@ -60,43 +65,93 @@ bool isValidMove(const char* const* board, int size, int startX, int startY, int
 		if (endX > startX) step = 1;
 		else step = -1;
 		for (int x = startX + step; x != endX; x += step) {
-			if (board[x][startY] != EMPTY) {
+			if (board[x][startY] != EMPTY && board[x][startY] != THRONE) {
 				return false;
 			}
 		}
 	}
 	return true;
 }
-void removePeace(char** board, int endX, int endY, bool isAttackersTurn) {
-	if (isAttackersTurn && board[endX + 1][endY] == DEFENDER && board[endX + 2][endY] == ATTACKER) {
-		board[endX + 1][endY] = EMPTY;
-	}
-	if (isAttackersTurn && board[endX - 1][endY] == DEFENDER && board[endX - 2][endY] == ATTACKER) {
-		board[endX - 1][endY] = EMPTY;
-	}
-	if (isAttackersTurn && board[endX][endY + 1] == DEFENDER && board[endX][endY + 2] == ATTACKER) {
-		board[endX][endY + 1] = EMPTY;
-	}
-	if (isAttackersTurn && board[endX][endY - 1] == DEFENDER && board[endX][endY - 2] == ATTACKER) {
-		board[endX][endY - 1] = EMPTY;
-	}
-	if (!isAttackersTurn && board[endX + 1][endY] == ATTACKER && board[endX + 2][endY] == DEFENDER) {
-		board[endX + 1][endY] = EMPTY;
-	}
-	if (!isAttackersTurn && board[endX - 1][endY] == ATTACKER && board[endX - 2][endY] == DEFENDER) {
-		board[endX - 1][endY] = EMPTY;
-	}
-	if (!isAttackersTurn && board[endX][endY + 1] == ATTACKER && board[endX][endY + 2] == DEFENDER) {
-		board[endX][endY + 1] = EMPTY;
-	}
-	if (!isAttackersTurn && board[endX][endY - 1] == ATTACKER && board[endX][endY - 2] == DEFENDER) {
-		board[endX][endY - 1] = EMPTY;
-	}
+bool isValid(char** board, int size, int endx, int endy) {
+	return (endx < size && endy < size && endx >= 0 && endy >= 0);
 }
-void makeMove(char** board, int startX, int startY, int endX, int endY, bool isAttackersTurn) {
+
+void removePeace(char** board, int size, int endX, int endY, bool isAttackersTurn) {
+	if (isValid(board, size, endX + 2, endY))
+	{
+		if ((isAttackersTurn && board[endX + 1][endY] == DEFENDER && board[endX + 2][endY] == ATTACKER)
+			|| (isAttackersTurn && board[endX + 1][endY] == DEFENDER && board[endX + 2][endY] == CORNER)
+			|| (isAttackersTurn && board[endX + 1][endY] == DEFENDER && board[endX + 2][endY] == KING)) {
+			board[endX + 1][endY] = EMPTY;
+			cout << "One defender is taken!" << endl;
+
+		}
+		if ((!isAttackersTurn && board[endX + 1][endY] == ATTACKER && board[endX + 2][endY] == DEFENDER)
+			|| (!isAttackersTurn && board[endX + 1][endY] == ATTACKER && board[endX + 2][endY] == CORNER)
+			|| (!isAttackersTurn && board[endX + 1][endY] == ATTACKER && board[endX + 2][endY] == KING)) {
+			board[endX + 1][endY] = EMPTY;
+			cout << "One attacker is taken!" << endl;
+
+		}
+	}
+	if (isValid(board, size, endX - 2, endY)) {
+		if ((isAttackersTurn && board[endX - 1][endY] == DEFENDER && board[endX - 2][endY] == ATTACKER)
+			|| (isAttackersTurn && board[endX - 1][endY] == DEFENDER && board[endX - 2][endY] == CORNER)
+			|| (isAttackersTurn && board[endX - 1][endY] == DEFENDER && board[endX - 2][endY] == KING)) {
+			board[endX - 1][endY] = EMPTY;
+			cout << "One defender is taken!" << endl;
+
+		}
+		if ((!isAttackersTurn && board[endX - 1][endY] == ATTACKER && board[endX - 2][endY] == DEFENDER)
+			|| (!isAttackersTurn && board[endX - 1][endY] == ATTACKER && board[endX - 2][endY] == CORNER)
+			|| (!isAttackersTurn && board[endX - 1][endY] == ATTACKER && board[endX - 2][endY] == KING)) {
+			board[endX - 1][endY] = EMPTY;
+			cout << "One attacker is taken!" << endl;
+
+		}
+	}
+	if (isValid(board, size, endX, endY + 2))
+	{
+		if ((isAttackersTurn && board[endX][endY + 1] == DEFENDER && board[endX][endY + 2] == ATTACKER)
+			|| (isAttackersTurn && board[endX][endY + 1] == DEFENDER && board[endX][endY + 2] == CORNER)
+			|| (isAttackersTurn && board[endX][endY + 1] == DEFENDER && board[endX][endY + 2] == KING)) {
+			board[endX][endY + 1] = EMPTY;
+			cout << "One defender is taken!" << endl;
+
+		}
+
+		if ((!isAttackersTurn && board[endX][endY + 1] == ATTACKER && board[endX][endY + 2] == DEFENDER)
+			|| (!isAttackersTurn && board[endX][endY + 1] == ATTACKER && board[endX][endY + 2] == CORNER)
+			|| (!isAttackersTurn && board[endX][endY + 1] == ATTACKER && board[endX][endY + 2] == KING)) {
+			board[endX][endY + 1] = EMPTY;
+			cout << "One attacker is taken!" << endl;
+
+		}
+	}
+	if (isValid(board, size, endX, endY - 2)) {
+		if ((isAttackersTurn && board[endX][endY - 1] == DEFENDER && board[endX][endY - 2] == ATTACKER)
+			|| (isAttackersTurn && board[endX][endY - 1] == DEFENDER && board[endX][endY - 2] == CORNER)
+			|| (isAttackersTurn && board[endX][endY - 1] == DEFENDER && board[endX][endY - 2] == KING)) {
+			board[endX][endY - 1] = EMPTY;
+			cout << "One defender is taken!" << endl;
+
+		}
+		if ((!isAttackersTurn && board[endX][endY - 1] == ATTACKER && board[endX][endY - 2] == DEFENDER)
+			|| (!isAttackersTurn && board[endX][endY - 1] == ATTACKER && board[endX][endY - 2] == CORNER)
+			|| (!isAttackersTurn && board[endX][endY - 1] == ATTACKER && board[endX][endY - 2] == KING)) {
+			board[endX][endY - 1] = EMPTY;
+			cout << "One attacker is taken!" << endl;
+
+		}
+	}
+
+
+
+}
+void makeMove(char** board, int size, int startX, int startY, int endX, int endY, bool isAttackersTurn) {
 	board[endX][endY] = board[startX][startY];
 	board[startX][startY] = EMPTY;
-	removePeace(board, endX, endY, isAttackersTurn);
+	removePeace(board, size, endX, endY, isAttackersTurn);
 }
 
 
@@ -244,7 +299,7 @@ void initializeBoard(char** board, int size) {
 
 void displayBoard(char** board, int size) {
 
-	cout << "   ";
+	cout << "  ";
 	for (int i = 0; i < size; ++i) {
 		cout << (char)('a' + i) << " ";
 	}
@@ -253,12 +308,13 @@ void displayBoard(char** board, int size) {
 	for (int i = 0; i < size; ++i) {
 		cout << size - i << " ";
 		for (int j = 0; j < size; ++j) {
+
 			cout << board[i][j] << " ";
 		}
 		cout << size - i << endl;
 	}
 
-	cout << "   ";
+	cout << "  ";
 	for (int i = 0; i < size; ++i) {
 		cout << (char)('a' + i) << " ";
 	}
@@ -297,19 +353,47 @@ void getInfo(const char* const* board, int size, int& attackerCount, int& defend
 		captured = 49 - attackerCount - defenderCount;
 	}
 }
-void printInfo(const char* const* board, int size,bool isAttackersTurn,int turns) {
+void printInfo(const char* const* board, int size, bool isAttackersTurn, int turns) {
 	int attackerCount = 0;
 	int defenderCount = 0;
 	int captured = 0;
 	getInfo(board, size, attackerCount, defenderCount, captured);
-	cout << (isAttackersTurn ? "It is Attacker's turn" : "It is Defender's turn")<<endl;
-	cout << "There are:" << endl << attackerCount << " attackers" << endl << defenderCount << " defenders" << endl<<captured<<" captured figures"<<endl;
-	cout << turns << " moves have passed"<<endl;
+	cout << (isAttackersTurn ? "It is Attacker's turn" : "It is Defender's turn") << endl;
+	cout << "There are:" << endl << attackerCount << " attackers" << endl << defenderCount << " defenders" << endl << captured << " captured figures" << endl;
+	cout << turns << " moves have passed" << endl;
+}
+void saveLastState(char** lastBoard, char** board, int size, bool& lastTurn, bool currentTurn) {
+	for (int i = 0; i < size; ++i) {
+		for (int j = 0; j < size; ++j) {
+			lastBoard[i][j] = board[i][j];
+		}
+	}
+	lastTurn = currentTurn;
+}
+bool restoreLastState(char** lastBoard, char** board, int size, bool& currentTurn, bool lastTurn) {
+	if (lastBoard == nullptr) {
+		cout << "No moves to undo!" << endl;
+		return false;
+	}
+
+	for (int i = 0; i < size; ++i) {
+		for (int j = 0; j < size; ++j) {
+			board[i][j] = lastBoard[i][j];
+		}
+	}
+	currentTurn = lastTurn;
+	return true;
 }
 void playGame(char** board, int size) {
+	int center = size / 2;
 	bool isAttackerTurn = true;
 	bool gameWon = false;
 	int movesPassed = 0;
+	bool playerLastTurn = false;
+	char** lastBoard = new char* [size];
+	for (int i = 0; i < size; ++i) {
+		lastBoard[i] = new char[size];
+	}
 	while (!gameWon) {
 		displayBoard(board, size);
 
@@ -318,6 +402,7 @@ void playGame(char** board, int size) {
 
 		char command[5], start[4], end[4];
 		cin >> command;
+		
 		if (compareStrings(command, "move"))
 		{
 			cin >> start >> end;
@@ -338,22 +423,31 @@ void playGame(char** board, int size) {
 			int endY = endCol - 'A';
 
 			if (isValidMove(board, size, startX, startY, endX, endY, isAttackerTurn)) {
-				makeMove(board, startX, startY, endX, endY, isAttackerTurn);
+				saveLastState(lastBoard, board, size, playerLastTurn, isAttackerTurn);
+				makeMove(board, size, startX, startY, endX, endY, isAttackerTurn);
 				if (checkVictory(board, size)) {
 					isAttackerTurn = !isAttackerTurn;
+					displayBoard(board, size);
 					cout << (isAttackerTurn ? "Defenders" : "Attackers") << " win!" << endl;
 					return;
 				}
 				movesPassed++;
 				isAttackerTurn = !isAttackerTurn;
+				if (board[center][center] == EMPTY) {
+					board[center][center] = THRONE;
+				}
 			}
 			else {
+				
 				cout << "Invalid move! Try again." << endl;
 			}
 
 		}
-		else if (compareStrings(command, "back")) {
-
+		else if (compareStrings(command, "back")&&movesPassed>0) {
+			if (restoreLastState(lastBoard, board, size, isAttackerTurn, playerLastTurn)) {
+				cout << "Move undone. Current turn: " << (isAttackerTurn ? "Attacker" : "Defender") << endl;
+			}
+			continue;
 		}
 		else if (compareStrings(command, "help")) {
 			cout << "You can use the following commands:" << endl << "Move - moves a figure" << endl << "back - go back one move" << endl << "help - display all commands you can use" << endl << "quit - quit current game" << endl;
@@ -365,22 +459,44 @@ void playGame(char** board, int size) {
 		else if (compareStrings(command, "info")) {
 			printInfo(board, size, isAttackerTurn, movesPassed);
 		}
-		else cout << "Invalid command!" << endl;
+		else {
+			if (cin.fail()) {
+				cin.clear();
+				cin.ignore(1000, '\n');
+			}
+			cout << "Invalid command!" << endl;
+		}
 
 	}
+	for (int i = 0; i < size; ++i) {
+		delete[] lastBoard[i];
+	}
+	delete[] lastBoard;
 }
 
+void startGame() {
+	int size, startGame;
 
-
-int main() {
-	int size;
+	do
+	{
+		cout << "Choose an option:" << endl << "1.Start game" << endl << "2.Quit" << endl;
+		cin >> startGame;
+		if (cin.fail()) {
+			cin.clear();               
+			cin.ignore(1000, '\n');
+		}
+	} while (startGame != 1 && startGame != 2);
+	if (startGame == 2)return;
 	cout << "Choose board size: (9, 11, 13): ";
 	cin >> size;
 
-	if (size != 9 && size != 11 && size != 13) {
-		cout << "Invalid size! Standard size is set to 11x11." << endl;
-		size = 11;
+	while (cin.fail() ||(size != 9 && size != 11 && size != 13)) {
+		cin.clear();                  
+		cin.ignore(1000, '\n');
+		cout << "Invalid size! Choose board size: (9, 11, 13): " << endl;
+		cin >> size;
 	}
+
 
 	char** board = new char* [size];
 	for (int i = 0; i < size; ++i) {
@@ -395,5 +511,9 @@ int main() {
 	}
 	delete[] board;
 
+}
+
+int main() {
+	startGame();
 	return 0;
 }
