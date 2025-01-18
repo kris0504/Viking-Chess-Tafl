@@ -1,12 +1,6 @@
 #include <iostream>
+#include "Constants.h"
 using namespace std;
-
-const char KING = 'K';
-const char ATTACKER = 'A';
-const char DEFENDER = 'D';
-const char EMPTY = '-';
-const char CORNER = 'X';
-const char THRONE = 'T';
 
 char toUpperCase(char c) {
 	if (c >= 'a' && c <= 'z') {
@@ -55,7 +49,7 @@ bool isValidMove(const char* const* board, int size, int startX, int startY, int
 		else step = -1;
 
 		for (int y = startY + step; y != endY; y += step) {
-			if (board[startX][y] != EMPTY) {
+			if (board[startX][y] != EMPTY&& board[startX][y] != THRONE) {
 				return false;
 			}
 		}
@@ -72,11 +66,11 @@ bool isValidMove(const char* const* board, int size, int startX, int startY, int
 	}
 	return true;
 }
-bool isValid(char** board, int size, int endx, int endy) {
-	return (endx < size && endy < size && endx >= 0 && endy >= 0);
+bool isValid(const char* const* board, int size, int endx, int endy) {
+	return (endx < size && endy < size && endx >= 0 && endy >= 0);//returns if its possible for a piece to be removed
 }
 
-void removePeace(char** board, int size, int endX, int endY, bool isAttackersTurn) {
+void removePeace(char* const* board, int size, int endX, int endY, bool isAttackersTurn) {
 	if (isValid(board, size, endX + 2, endY))
 	{
 		if ((isAttackersTurn && board[endX + 1][endY] == DEFENDER && board[endX + 2][endY] == ATTACKER)
@@ -148,14 +142,14 @@ void removePeace(char** board, int size, int endX, int endY, bool isAttackersTur
 
 
 }
-void makeMove(char** board, int size, int startX, int startY, int endX, int endY, bool isAttackersTurn) {
+void makeMove(char* const* board, int size, int startX, int startY, int endX, int endY, bool isAttackersTurn) {
 	board[endX][endY] = board[startX][startY];
 	board[startX][startY] = EMPTY;
 	removePeace(board, size, endX, endY, isAttackersTurn);
 }
 
 
-bool checkVictory(char** board, int size) {
+bool checkVictory(const char* const* board, int size) {
 
 	if ((board[0][size - 1] == KING) || (board[0][0] == KING) ||
 		(board[size - 1][size - 1] == KING) || (board[size - 1][0] == KING)) {
@@ -188,7 +182,7 @@ bool checkVictory(char** board, int size) {
 	return true;
 }
 
-void initializeFor9(char** board, int size, int center) {
+void initializeFor9(char*const* board, int size, int center) {
 	for (int i = 0; i < size; ++i) {
 		for (int j = 0; j < size; ++j) {
 			board[i][j] = EMPTY;
@@ -230,7 +224,7 @@ void initializeFor9(char** board, int size, int center) {
 	board[center][size - 2] = ATTACKER;
 }
 
-void initializeFor11(char** board, int size, int center) {
+void initializeFor11(char*const* board, int size, int center) {
 	board[0][center - 2] = ATTACKER;
 	board[0][center + 2] = ATTACKER;
 	board[size - 1][center - 2] = ATTACKER;
@@ -245,7 +239,7 @@ void initializeFor11(char** board, int size, int center) {
 	board[center + 1][center + 1] = DEFENDER;
 }
 
-void initializeFor13(char** board, int size, int center) {
+void initializeFor13(char*const* board, int size, int center) {
 	board[1][center] = EMPTY;
 	board[size - 2][center] = EMPTY;
 	board[center][1] = EMPTY;
@@ -286,7 +280,7 @@ void initializeFor13(char** board, int size, int center) {
 	board[center + 2][center + 2] = DEFENDER;
 }
 
-void initializeBoard(char** board, int size) {
+void initializeBoard(char*const* board, int size) {
 	int center = size / 2;
 	initializeFor9(board, size, center);
 	if (size == 11) {
@@ -297,28 +291,73 @@ void initializeBoard(char** board, int size) {
 	}
 }
 
-void displayBoard(char** board, int size) {
+void displayBoard(const char* const * board, int size) {
 
 	cout << "  ";
-	for (int i = 0; i < size; ++i) {
-		cout << (char)('a' + i) << " ";
-	}
-	cout << endl;
-
-	for (int i = 0; i < size; ++i) {
-		cout << size - i << " ";
-		for (int j = 0; j < size; ++j) {
-
-			cout << board[i][j] << " ";
+	if (size == 9) {
+		for (int i = 0; i < size; ++i) {
+			cout << (char)('a' + i) << " ";
 		}
-		cout << size - i << endl;
+		cout << endl;
+		for (int i = 0; i < size; ++i) {
+			cout << size - i << " ";
+			for (int j = 0; j < size; ++j) {
+
+				cout << board[i][j] << " ";
+			}
+			cout << size - i << endl;
+		}
+		cout << "  ";
+		for (int i = 0; i < size; ++i) {
+			cout << (char)('a' + i) << " ";
+		}
+		cout << endl;
+	}
+	else if (size == 11) {
+		cout << " ";
+		for (int i = 0; i < size; ++i) {
+			cout << (char)('a' + i) << " ";
+		}
+		cout << endl;
+		for (int i = 0; i < size; ++i) {
+			if (i < 2)cout << size - i << " ";
+			else cout << size - i << "  ";
+			for (int j = 0; j < size; ++j) {
+
+				cout << board[i][j] << " ";
+			}
+			cout << size - i << endl;
+		}
+		cout << "   ";
+		for (int i = 0; i < size; ++i) {
+			cout << (char)('a' + i) << " ";
+		}
+		cout << endl;
+	}
+	else if (size == 13) {
+		cout << " ";
+		for (int i = 0; i < size; ++i) {
+			cout << (char)('a' + i) << " ";
+		}
+		cout << endl;
+		for (int i = 0; i < size; ++i) {
+			if (i < 4)cout << size - i << " ";
+			else cout << size - i << "  ";
+			for (int j = 0; j < size; ++j) {
+
+				cout << board[i][j] << " ";
+			}
+			cout << size - i << endl;
+		}
+		cout << "   ";
+		for (int i = 0; i < size; ++i) {
+			cout << (char)('a' + i) << " ";
+		}
+		cout << endl;
 	}
 
-	cout << "  ";
-	for (int i = 0; i < size; ++i) {
-		cout << (char)('a' + i) << " ";
-	}
-	cout << endl;
+
+	
 }
 bool invalidCordinates(char startCol, char endCol, char startRow, char endRow, int size) {
 	return startCol < 'A' || startCol >= 'A' + size || endCol < 'A' || endCol >= 'A' + size ||
@@ -362,7 +401,7 @@ void printInfo(const char* const* board, int size, bool isAttackersTurn, int tur
 	cout << "There are:" << endl << attackerCount << " attackers" << endl << defenderCount << " defenders" << endl << captured << " captured figures" << endl;
 	cout << turns << " moves have passed" << endl;
 }
-void saveLastState(char** lastBoard, char** board, int size, bool& lastTurn, bool currentTurn) {
+void saveLastState(char** lastBoard, const char* const* board, int size, bool& lastTurn, bool currentTurn) {
 	for (int i = 0; i < size; ++i) {
 		for (int j = 0; j < size; ++j) {
 			lastBoard[i][j] = board[i][j];
@@ -370,7 +409,7 @@ void saveLastState(char** lastBoard, char** board, int size, bool& lastTurn, boo
 	}
 	lastTurn = currentTurn;
 }
-bool restoreLastState(char** lastBoard, char** board, int size, bool& currentTurn, bool lastTurn) {
+bool restoreLastState(const char* const* lastBoard, char* const* board, int size, bool& currentTurn, bool lastTurn) {
 	if (lastBoard == nullptr) {
 		cout << "No moves to undo!" << endl;
 		return false;
@@ -402,7 +441,7 @@ void playGame(char** board, int size) {
 
 		char command[5], start[4], end[4];
 		cin >> command;
-		
+
 		if (compareStrings(command, "move"))
 		{
 			cin >> start >> end;
@@ -438,12 +477,12 @@ void playGame(char** board, int size) {
 				}
 			}
 			else {
-				
+
 				cout << "Invalid move! Try again." << endl;
 			}
 
 		}
-		else if (compareStrings(command, "back")&&movesPassed>0) {
+		else if (compareStrings(command, "back") && movesPassed > 0) {
 			if (restoreLastState(lastBoard, board, size, isAttackerTurn, playerLastTurn)) {
 				cout << "Move undone. Current turn: " << (isAttackerTurn ? "Attacker" : "Defender") << endl;
 			}
@@ -460,10 +499,9 @@ void playGame(char** board, int size) {
 			printInfo(board, size, isAttackerTurn, movesPassed);
 		}
 		else {
-			if (cin.fail()) {
 				cin.clear();
 				cin.ignore(1000, '\n');
-			}
+			
 			cout << "Invalid command!" << endl;
 		}
 
@@ -482,7 +520,7 @@ void startGame() {
 		cout << "Choose an option:" << endl << "1.Start game" << endl << "2.Quit" << endl;
 		cin >> startGame;
 		if (cin.fail()) {
-			cin.clear();               
+			cin.clear();
 			cin.ignore(1000, '\n');
 		}
 	} while (startGame != 1 && startGame != 2);
@@ -490,8 +528,8 @@ void startGame() {
 	cout << "Choose board size: (9, 11, 13): ";
 	cin >> size;
 
-	while (cin.fail() ||(size != 9 && size != 11 && size != 13)) {
-		cin.clear();                  
+	while (cin.fail() || (size != 9 && size != 11 && size != 13)) {
+		cin.clear();
 		cin.ignore(1000, '\n');
 		cout << "Invalid size! Choose board size: (9, 11, 13): " << endl;
 		cin >> size;
