@@ -91,14 +91,16 @@ void removePeace(char* const* board, int size, int endX, int endY, bool isAttack
 	{
 		if ((isAttackersTurn && board[endX + 1][endY] == DEFENDER && board[endX + 2][endY] == ATTACKER)
 			|| (isAttackersTurn && board[endX + 1][endY] == DEFENDER && board[endX + 2][endY] == CORNER)
-			|| (isAttackersTurn && board[endX + 1][endY] == DEFENDER && board[endX + 2][endY] == KING)) {
+			|| (isAttackersTurn && board[endX + 1][endY] == DEFENDER && board[endX + 2][endY] == KING)
+			|| (isAttackersTurn && board[endX + 1][endY] == DEFENDER && board[endX + 2][endY] == THRONE)) {
 			board[endX + 1][endY] = EMPTY;
 			cout << "One defender is taken!" << endl;
 
 		}
 		if ((!isAttackersTurn && board[endX + 1][endY] == ATTACKER && board[endX + 2][endY] == DEFENDER)
 			|| (!isAttackersTurn && board[endX + 1][endY] == ATTACKER && board[endX + 2][endY] == CORNER)
-			|| (!isAttackersTurn && board[endX + 1][endY] == ATTACKER && board[endX + 2][endY] == KING)) {
+			|| (!isAttackersTurn && board[endX + 1][endY] == ATTACKER && board[endX + 2][endY] == KING)
+			|| (!isAttackersTurn && board[endX + 1][endY] == ATTACKER && board[endX + 2][endY] == THRONE)) {
 			board[endX + 1][endY] = EMPTY;
 			cout << "One attacker is taken!" << endl;
 
@@ -107,14 +109,16 @@ void removePeace(char* const* board, int size, int endX, int endY, bool isAttack
 	if (isValid(board, size, endX - 2, endY)) {
 		if ((isAttackersTurn && board[endX - 1][endY] == DEFENDER && board[endX - 2][endY] == ATTACKER)
 			|| (isAttackersTurn && board[endX - 1][endY] == DEFENDER && board[endX - 2][endY] == CORNER)
-			|| (isAttackersTurn && board[endX - 1][endY] == DEFENDER && board[endX - 2][endY] == KING)) {
+			|| (isAttackersTurn && board[endX - 1][endY] == DEFENDER && board[endX - 2][endY] == KING)
+			|| (isAttackersTurn && board[endX - 1][endY] == DEFENDER && board[endX - 2][endY] == THRONE)) {
 			board[endX - 1][endY] = EMPTY;
 			cout << "One defender is taken!" << endl;
 
 		}
 		if ((!isAttackersTurn && board[endX - 1][endY] == ATTACKER && board[endX - 2][endY] == DEFENDER)
 			|| (!isAttackersTurn && board[endX - 1][endY] == ATTACKER && board[endX - 2][endY] == CORNER)
-			|| (!isAttackersTurn && board[endX - 1][endY] == ATTACKER && board[endX - 2][endY] == KING)) {
+			|| (!isAttackersTurn && board[endX - 1][endY] == ATTACKER && board[endX - 2][endY] == KING)
+			|| (!isAttackersTurn && board[endX - 1][endY] == ATTACKER && board[endX - 2][endY] == THRONE)) {
 			board[endX - 1][endY] = EMPTY;
 			cout << "One attacker is taken!" << endl;
 
@@ -124,7 +128,8 @@ void removePeace(char* const* board, int size, int endX, int endY, bool isAttack
 	{
 		if ((isAttackersTurn && board[endX][endY + 1] == DEFENDER && board[endX][endY + 2] == ATTACKER)
 			|| (isAttackersTurn && board[endX][endY + 1] == DEFENDER && board[endX][endY + 2] == CORNER)
-			|| (isAttackersTurn && board[endX][endY + 1] == DEFENDER && board[endX][endY + 2] == KING)) {
+			|| (isAttackersTurn && board[endX][endY + 1] == DEFENDER && board[endX][endY + 2] == KING)
+			|| (isAttackersTurn && board[endX][endY + 1] == DEFENDER && board[endX][endY + 2] == THRONE)) {
 			board[endX][endY + 1] = EMPTY;
 			cout << "One defender is taken!" << endl;
 
@@ -132,7 +137,8 @@ void removePeace(char* const* board, int size, int endX, int endY, bool isAttack
 
 		if ((!isAttackersTurn && board[endX][endY + 1] == ATTACKER && board[endX][endY + 2] == DEFENDER)
 			|| (!isAttackersTurn && board[endX][endY + 1] == ATTACKER && board[endX][endY + 2] == CORNER)
-			|| (!isAttackersTurn && board[endX][endY + 1] == ATTACKER && board[endX][endY + 2] == KING)) {
+			|| (!isAttackersTurn && board[endX][endY + 1] == ATTACKER && board[endX][endY + 2] == KING)
+			|| (!isAttackersTurn && board[endX][endY + 1] == ATTACKER && board[endX][endY + 2] == THRONE)) {
 			board[endX][endY + 1] = EMPTY;
 			cout << "One attacker is taken!" << endl;
 
@@ -141,14 +147,16 @@ void removePeace(char* const* board, int size, int endX, int endY, bool isAttack
 	if (isValid(board, size, endX, endY - 2)) {
 		if ((isAttackersTurn && board[endX][endY - 1] == DEFENDER && board[endX][endY - 2] == ATTACKER)
 			|| (isAttackersTurn && board[endX][endY - 1] == DEFENDER && board[endX][endY - 2] == CORNER)
-			|| (isAttackersTurn && board[endX][endY - 1] == DEFENDER && board[endX][endY - 2] == KING)) {
+			|| (isAttackersTurn && board[endX][endY - 1] == DEFENDER && board[endX][endY - 2] == KING)
+			|| (isAttackersTurn && board[endX][endY - 1] == DEFENDER && board[endX][endY - 2] == THRONE)) {
 			board[endX][endY - 1] = EMPTY;
 			cout << "One defender is taken!" << endl;
 
 		}
 		if ((!isAttackersTurn && board[endX][endY - 1] == ATTACKER && board[endX][endY - 2] == DEFENDER)
 			|| (!isAttackersTurn && board[endX][endY - 1] == ATTACKER && board[endX][endY - 2] == CORNER)
-			|| (!isAttackersTurn && board[endX][endY - 1] == ATTACKER && board[endX][endY - 2] == KING)) {
+			|| (!isAttackersTurn && board[endX][endY - 1] == ATTACKER && board[endX][endY - 2] == KING)
+			|| (!isAttackersTurn && board[endX][endY - 1] == ATTACKER && board[endX][endY - 2] == THRONE)) {
 			board[endX][endY - 1] = EMPTY;
 			cout << "One attacker is taken!" << endl;
 
