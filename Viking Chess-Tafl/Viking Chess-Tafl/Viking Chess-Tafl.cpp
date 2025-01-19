@@ -65,7 +65,7 @@ bool isValidMove(const char* const* board, int size, int startX, int startY, int
 		else step = -1;
 
 		for (int y = startY + step; y != endY; y += step) {
-			if (board[startX][y] != EMPTY&& board[startX][y] != THRONE) {
+			if (board[startX][y] != EMPTY && board[startX][y] != THRONE) {
 				return false;
 			}
 		}
@@ -198,7 +198,7 @@ bool checkVictory(const char* const* board, int size) {
 	return true;
 }
 
-void initializeFor9(char*const* board, int size, int center) {
+void initializeFor9(char* const* board, int size, int center) {
 	for (int i = 0; i < size; ++i) {
 		for (int j = 0; j < size; ++j) {
 			board[i][j] = EMPTY;
@@ -240,7 +240,7 @@ void initializeFor9(char*const* board, int size, int center) {
 	board[center][size - 2] = ATTACKER;
 }
 
-void initializeFor11(char*const* board, int size, int center) {
+void initializeFor11(char* const* board, int size, int center) {
 	board[0][center - 2] = ATTACKER;
 	board[0][center + 2] = ATTACKER;
 	board[size - 1][center - 2] = ATTACKER;
@@ -255,7 +255,7 @@ void initializeFor11(char*const* board, int size, int center) {
 	board[center + 1][center + 1] = DEFENDER;
 }
 
-void initializeFor13(char*const* board, int size, int center) {
+void initializeFor13(char* const* board, int size, int center) {
 	board[1][center] = EMPTY;
 	board[size - 2][center] = EMPTY;
 	board[center][1] = EMPTY;
@@ -296,7 +296,7 @@ void initializeFor13(char*const* board, int size, int center) {
 	board[center + 2][center + 2] = DEFENDER;
 }
 
-void initializeBoard(char*const* board, int size) {
+void initializeBoard(char* const* board, int size) {
 	int center = size / 2;
 	initializeFor9(board, size, center);
 	if (size == 11) {
@@ -307,7 +307,7 @@ void initializeBoard(char*const* board, int size) {
 	}
 }
 
-void displayBoard(const char* const * board, int size) {
+void displayBoard(const char* const* board, int size) {
 
 	cout << "  ";
 	if (size == 9) {
@@ -373,7 +373,7 @@ void displayBoard(const char* const * board, int size) {
 	}
 
 
-	
+
 }
 bool invalidCordinates(char startCol, char endCol, char startRow, char endRow, int size) {
 	return startCol < 'A' || startCol >= 'A' + size || endCol < 'A' || endCol >= 'A' + size ||
@@ -425,7 +425,7 @@ void saveLastState(char** lastBoard, const char* const* board, int size, bool& l
 	}
 	lastTurn = currentTurn;
 }
-bool restoreLastState(const char* const* lastBoard, char* const* board, int size, bool& currentTurn, bool lastTurn) {
+bool restoreLastState(const char* const* lastBoard, char* const* board, int size, bool& currentTurn, bool lastTurn, int& movespassed) {
 	if (lastBoard == nullptr) {
 		cout << "No moves to undo!" << endl;
 		return false;
@@ -437,6 +437,7 @@ bool restoreLastState(const char* const* lastBoard, char* const* board, int size
 		}
 	}
 	currentTurn = lastTurn;
+	movespassed--;
 	return true;
 }
 void playGame(char** board, int size) {
@@ -499,7 +500,7 @@ void playGame(char** board, int size) {
 
 		}
 		else if (compareStrings(command, "back") && movesPassed > 0) {
-			if (restoreLastState(lastBoard, board, size, isAttackerTurn, playerLastTurn)) {
+			if (restoreLastState(lastBoard, board, size, isAttackerTurn, playerLastTurn, movesPassed)) {
 				cout << "Move undone. Current turn: " << (isAttackerTurn ? "Attacker" : "Defender") << endl;
 			}
 			continue;
@@ -519,9 +520,9 @@ void playGame(char** board, int size) {
 			printInfo(board, size, isAttackerTurn, movesPassed);
 		}
 		else {
-				cin.clear();
-				cin.ignore(1000, '\n');
-			
+			cin.clear();
+			cin.ignore(1000, '\n');
+
 			cout << "Invalid command!" << endl;
 		}
 
