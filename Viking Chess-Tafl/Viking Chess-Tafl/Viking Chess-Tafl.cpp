@@ -426,7 +426,7 @@ void saveLastState(char** lastBoard, const char* const* board, int size, bool& l
 	lastTurn = currentTurn;
 }
 bool restoreLastState(const char* const* lastBoard, char* const* board, int size, bool& currentTurn, bool lastTurn, int& movespassed) {
-	if (lastBoard == nullptr) {
+	if (movespassed == 0||lastTurn==currentTurn) {
 		cout << "No moves to undo!" << endl;
 		return false;
 	}
