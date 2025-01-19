@@ -1,3 +1,19 @@
+/**
+*
+* Solution to course project # 7
+* Introduction to programming course
+* Faculty of Mathematics and Informatics of Sofia University
+* Winter semester 2023/2024
+*
+* @author Êristiyan Todorov
+* @idnumber 6MI0600484
+* @compiler VC
+*
+* <main file>
+*
+*/
+
+
 #include <iostream>
 #include "Constants.h"
 using namespace std;
@@ -489,10 +505,14 @@ void playGame(char** board, int size) {
 			continue;
 		}
 		else if (compareStrings(command, "help")) {
-			cout << "You can use the following commands:" << endl << "Move - moves a figure" << endl << "back - go back one move" << endl << "help - display all commands you can use" << endl << "quit - quit current game" << endl;
+			cout << "You can use the following commands:" << endl << "move - moves a figure" << endl << "back - go back one move" << endl << "help - display all commands you can use" << endl << "quit - quit current game" << endl;
 			continue;
 		}
 		else if (compareStrings(command, "quit")) {
+			for (int i = 0; i < size; ++i) {
+				delete[] lastBoard[i];
+			}
+			delete[] lastBoard;
 			return;
 		}
 		else if (compareStrings(command, "info")) {
